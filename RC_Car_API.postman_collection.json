@@ -1,0 +1,503 @@
+{
+	"info": {
+		"_postman_id": "rc-car-api-2025",
+		"name": "RC Car API v1.3.1",
+		"description": "3BFAB RC Car API koleksiyonu - ESP8266 tabanlı uzaktan kumandalı araba",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "1. Sistem",
+			"item": [
+				{
+					"name": "Versiyon Bilgisi",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/version",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"version"
+							]
+						},
+						"description": "Firmware versiyonunu ve build tarihini döner"
+					}
+				}
+			]
+		},
+		{
+			"name": "2. Direksiyon",
+			"item": [
+				{
+					"name": "Direksiyon - Merkez (0°)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/servo?angle=72",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"servo"
+							],
+							"query": [
+								{
+									"key": "angle",
+									"value": "72",
+									"description": "Merkez/Düz (gerçek 0°)"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Direksiyon - Maksimum Sol",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/servo?angle=0",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"servo"
+							],
+							"query": [
+								{
+									"key": "angle",
+									"value": "0"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Direksiyon - Maksimum Sağ",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/servo?angle=180",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"servo"
+							],
+							"query": [
+								{
+									"key": "angle",
+									"value": "180"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Direksiyon - Hafif Sol (-20°)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/servo?angle=52",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"servo"
+							],
+							"query": [
+								{
+									"key": "angle",
+									"value": "52",
+									"description": "52 - 72 = -20°"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Direksiyon - Hafif Sağ (+20°)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/servo?angle=92",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"servo"
+							],
+							"query": [
+								{
+									"key": "angle",
+									"value": "92",
+									"description": "92 - 72 = +20°"
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "3. Motor (Gaz)",
+			"item": [
+				{
+					"name": "Motor - Dur",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/mosfet?duty=0",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"mosfet"
+							],
+							"query": [
+								{
+									"key": "duty",
+									"value": "0"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Motor - İleri Yavaş (25%)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/mosfet?duty=64",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"mosfet"
+							],
+							"query": [
+								{
+									"key": "duty",
+									"value": "64",
+									"description": "25% = 255 * 0.25 = 64"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Motor - İleri Orta (50%)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/mosfet?duty=128",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"mosfet"
+							],
+							"query": [
+								{
+									"key": "duty",
+									"value": "128",
+									"description": "50% = 255 * 0.5 = 128"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Motor - İleri Hızlı (75%)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/mosfet?duty=191",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"mosfet"
+							],
+							"query": [
+								{
+									"key": "duty",
+									"value": "191",
+									"description": "75% = 255 * 0.75 = 191"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Motor - İleri Tam Gaz (100%)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/mosfet?duty=255",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"mosfet"
+							],
+							"query": [
+								{
+									"key": "duty",
+									"value": "255"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Motor - Geri Yavaş (25%)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/mosfet?duty=-64",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"mosfet"
+							],
+							"query": [
+								{
+									"key": "duty",
+									"value": "-64"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Motor - Geri Orta (50%)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/mosfet?duty=-128",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"mosfet"
+							],
+							"query": [
+								{
+									"key": "duty",
+									"value": "-128"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Motor - Geri Tam Gaz (100%)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/mosfet?duty=-255",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"mosfet"
+							],
+							"query": [
+								{
+									"key": "duty",
+									"value": "-255"
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "4. Fren",
+			"item": [
+				{
+					"name": "Fren - Aktif",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/brake?state=1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"brake"
+							],
+							"query": [
+								{
+									"key": "state",
+									"value": "1",
+									"description": "Fren bas"
+								}
+							]
+						},
+						"description": "Freni aktif eder, stop lambası yanar"
+					}
+				},
+				{
+					"name": "Fren - Pasif",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/brake?state=0",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"brake"
+							],
+							"query": [
+								{
+									"key": "state",
+									"value": "0",
+									"description": "Fren bırak"
+								}
+							]
+						},
+						"description": "Freni pasif eder, stop lambası söner"
+					}
+				}
+			]
+		},
+		{
+			"name": "5. Işıklar",
+			"item": [
+				{
+					"name": "Ön Far - Toggle",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/headlight",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"headlight"
+							]
+						},
+						"description": "Ön farları aç/kapa (toggle)"
+					}
+				},
+				{
+					"name": "Stop Lambası - Toggle",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/stoplight",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"stoplight"
+							]
+						},
+						"description": "Stop lambasını manuel aç/kapa (toggle)"
+					}
+				}
+			]
+		},
+		{
+			"name": "6. Test Senaryoları",
+			"item": [
+				{
+					"name": "Test 1 - Sistem Kontrolü",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/version",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"version"
+							]
+						}
+					}
+				},
+				{
+					"name": "Test 2 - Başlangıç Pozisyonu",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/servo?angle=72&api/mosfet?duty=0",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"servo"
+							],
+							"query": [
+								{
+									"key": "angle",
+									"value": "72"
+								},
+								{
+									"key": "api/mosfet?duty",
+									"value": "0"
+								}
+							]
+						},
+						"description": "Direksiyon merkez, motor dur"
+					}
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://192.168.1.100",
+			"type": "string"
+		}
+	]
+}
+
+

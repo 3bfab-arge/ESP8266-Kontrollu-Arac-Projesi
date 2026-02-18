@@ -1,0 +1,199 @@
+{
+  "api_info": {
+    "name": "RC Car API",
+    "version": "v1.3.1",
+    "protocol": "HTTP/REST",
+    "port": 80,
+    "base_url_example": "http://192.168.1.100"
+  },
+  "wifi_connection": {
+    "ssid": "3BFab-RD",
+    "password": "20223BFab*",
+    "ota_hostname": "RC-Car",
+    "ota_password": "20223BFab*"
+  },
+  "endpoints": [
+    {
+      "name": "Servo Kontrolü (Direksiyon)",
+      "method": "GET",
+      "path": "/api/servo",
+      "description": "Direksiyon açısını kontrol eder",
+      "parameters": [
+        {
+          "name": "angle",
+          "type": "integer",
+          "required": true,
+          "range": "0-180",
+          "description": "Servo açısı (0=sol, 72=merkez, 180=sağ)",
+          "notes": "Gerçek açı = angle - 72"
+        }
+      ],
+      "responses": {
+        "200": "OK",
+        "400": "angle parameter missing"
+      },
+      "examples": [
+        "http://192.168.1.100/api/servo?angle=72",
+        "http://192.168.1.100/api/servo?angle=0",
+        "http://192.168.1.100/api/servo?angle=180"
+      ]
+    },
+    {
+      "name": "Motor Kontrolü (Gaz/Hız)",
+      "method": "GET",
+      "path": "/api/mosfet",
+      "description": "Motor hızını ve yönünü kontrol eder",
+      "parameters": [
+        {
+          "name": "duty",
+          "type": "integer",
+          "required": true,
+          "range": "-255 to +255",
+          "description": "Motor PWM (pozitif=ileri, negatif=geri, 0=dur)",
+          "notes": "Minimum PWM eşiği: 200/1023 (%20)"
+        }
+      ],
+      "responses": {
+        "200_ok": "OK",
+        "200_braking": "BRAKING (fren aktifse)",
+        "400": "duty parameter missing"
+      },
+      "examples": [
+        "http://192.168.1.100/api/mosfet?duty=255",
+        "http://192.168.1.100/api/mosfet?duty=128",
+        "http://192.168.1.100/api/mosfet?duty=0",
+        "http://192.168.1.100/api/mosfet?duty=-128"
+      ]
+    },
+    {
+      "name": "Fren Kontrolü",
+      "method": "GET",
+      "path": "/api/brake",
+      "description": "Fren sistemini aktif/pasif eder",
+      "parameters": [
+        {
+          "name": "state",
+          "type": "integer",
+          "required": true,
+          "range": "0-1",
+          "description": "Fren durumu (0=pasif, 1=aktif)",
+          "notes": "Fren aktifken stop lambası yanar ve motor komutları engellenir"
+        }
+      ],
+      "responses": {
+        "200_on": "BRAKING",
+        "200_off": "RELEASED",
+        "400": "state parameter missing"
+      },
+      "examples": [
+        "http://192.168.1.100/api/brake?state=1",
+        "http://192.168.1.100/api/brake?state=0"
+      ]
+    },
+    {
+      "name": "Ön Far Kontrolü",
+      "method": "GET",
+      "path": "/api/headlight",
+      "description": "Ön farları aç/kapa (toggle)",
+      "parameters": [],
+      "responses": {
+        "200_on": "ON",
+        "200_off": "OFF"
+      },
+      "examples": [
+        "http://192.168.1.100/api/headlight"
+      ]
+    },
+    {
+      "name": "Stop Lambası Kontrolü",
+      "method": "GET",
+      "path": "/api/stoplight",
+      "description": "Stop lambasını aç/kapa (toggle) - Manuel kontrol",
+      "parameters": [],
+      "responses": {
+        "200_on": "ON",
+        "200_off": "OFF"
+      },
+      "notes": "Fren basıldığında stop lambası otomatik yanar",
+      "examples": [
+        "http://192.168.1.100/api/stoplight"
+      ]
+    },
+    {
+      "name": "Versiyon Bilgisi",
+      "method": "GET",
+      "path": "/api/version",
+      "description": "Firmware versiyonunu ve build tarihini döner",
+      "parameters": [],
+      "responses": {
+        "200": "v1.3.1 | Oct 14 2025 12:34:56"
+      },
+      "examples": [
+        "http://192.168.1.100/api/version"
+      ]
+    }
+  ],
+  "pin_mapping": {
+    "D5_GPIO14": "Servo PWM (Direksiyon)",
+    "D6_GPIO12": "Motor ENA (PWM hız kontrolü)",
+    "D7_GPIO13": "Motor IN1 (Yön 1)",
+    "D8_GPIO15": "Motor IN2 (Yön 2)",
+    "D1_GPIO5": "Stop LED",
+    "D2_GPIO4": "Headlight LED"
+  },
+  "vites_mantigi": {
+    "description": "Mobil uygulamada vites sistemi oluşturulmalı",
+    "vitesler": {
+      "D": "Drive (İleri)",
+      "N": "Neutral (Boşta)",
+      "R": "Reverse (Geri)"
+    },
+    "hesaplama": {
+      "formula": "duty = gaz_yüzdesi * 2.55",
+      "D_vites": "duty pozitif (örn: %50 gaz = duty:128)",
+      "N_vites": "duty = 0",
+      "R_vites": "duty negatif (örn: %50 gaz = duty:-128)"
+    }
+  },
+  "test_sequence": [
+    {
+      "step": 1,
+      "action": "Versiyon kontrolü",
+      "url": "/api/version"
+    },
+    {
+      "step": 2,
+      "action": "Direksiyon merkez",
+      "url": "/api/servo?angle=72"
+    },
+    {
+      "step": 3,
+      "action": "Motor dur",
+      "url": "/api/mosfet?duty=0"
+    },
+    {
+      "step": 4,
+      "action": "İleri yavaş",
+      "url": "/api/mosfet?duty=100"
+    },
+    {
+      "step": 5,
+      "action": "Geri yavaş",
+      "url": "/api/mosfet?duty=-100"
+    },
+    {
+      "step": 6,
+      "action": "Fren test",
+      "url": "/api/brake?state=1"
+    }
+  ],
+  "important_notes": [
+    "HTTP isteklerinde timeout süresi ekleyin (örn: 2 saniye)",
+    "Slider değişirken çok sık istek atmamak için debounce kullanın",
+    "Fren aktifken motor komutları engellenir",
+    "Aynı Wi-Fi ağında olmalısınız",
+    "IP adresini uygulama ayarlarından yapılandırılabilir yapın"
+  ]
+}
+
+
