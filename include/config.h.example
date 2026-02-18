@@ -1,0 +1,12 @@
+#ifndef CONFIG_H
+#define CONFIG_H
+
+// Wi-Fi bilgileri
+// Bu dosyayı config.h olarak kopyalayın ve kendi bilgilerinizi girin
+static const char* WIFI_SSID = "WiFi-Ağ-Adınız";
+static const char* WIFI_PASSWORD = "WiFi-Şifreniz";
+
+// OTA (Over-The-Air) güncelleme şifresi
+static const char* OTA_PASSWORD = "OTA-Şifreniz";
+
+#endif

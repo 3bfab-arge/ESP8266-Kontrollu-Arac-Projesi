@@ -30,3 +30,6 @@ Thumbs.db
 
 # Dependencies
 lib_deps/
+
+# Config files with sensitive data
+include/config.h

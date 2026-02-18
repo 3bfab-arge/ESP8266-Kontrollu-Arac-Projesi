@@ -44,11 +44,18 @@ pio lib install
 
 ### 3. Wi-Fi Ayarları
 
-`src/main.cpp` dosyasındaki Wi-Fi bilgilerini kendi ağınıza göre güncelleyin:
+**Önemli**: Hassas bilgiler (WiFi şifreleri, OTA şifreleri) `include/config.h` dosyasında saklanır ve Git'e yüklenmez.
 
+1. `include/config.h.example` dosyasını `include/config.h` olarak kopyalayın:
+```bash
+cp include/config.h.example include/config.h
+```
+
+2. `include/config.h` dosyasını açın ve kendi bilgilerinizi girin:
 ```cpp
 static const char* WIFI_SSID = "WiFi-Ağ-Adınız";
 static const char* WIFI_PASSWORD = "WiFi-Şifreniz";
+static const char* OTA_PASSWORD = "OTA-Şifreniz";
 ```
 
 ### 4. Derleme ve Yükleme
@@ -65,9 +72,9 @@ pio run -e d1_mini_ota -t upload
 
 OTA için `platformio.ini` dosyasındaki IP adresini ve şifreyi güncelleyin:
 ```ini
-upload_port = 192.168.6.10  # ESP8266'nın IP adresi
+upload_port = 192.168.1.100  # ESP8266'nın IP adresi
 upload_flags =
-  --auth=20223BFab*          # OTA şifresi
+  --auth=OTA-Şifreniz         # config.h dosyasındaki OTA_PASSWORD ile aynı olmalı
 ```
 
 ## 📡 API Kullanımı

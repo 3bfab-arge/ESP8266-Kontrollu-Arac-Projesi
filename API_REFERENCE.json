@@ -7,10 +7,11 @@
     "base_url_example": "http://192.168.1.100"
   },
   "wifi_connection": {
-    "ssid": "3BFab-RD",
-    "password": "20223BFab*",
+    "ssid": "WiFi-Ağ-Adınız",
+    "password": "WiFi-Şifreniz",
     "ota_hostname": "RC-Car",
-    "ota_password": "20223BFab*"
+    "ota_password": "OTA-Şifreniz",
+    "note": "Gerçek bilgiler config.h dosyasında saklanmalıdır"
   },
   "endpoints": [
     {

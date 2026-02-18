@@ -3,6 +3,7 @@
 #include <ESP8266WiFi.h>
 #include <ESP8266WebServer.h>
 #include <ArduinoOTA.h>
+#include "config.h"
 
 // Pin atamaları (Wemos D1 mini):
 static const uint8_t SERVO_PIN = D5;   // GPIO14
@@ -27,9 +28,7 @@ static const int SERVO_MAX_DEG = 180;
 static const char* FIRMWARE_VERSION = "v1.3.1";
 static const char* BUILD_DATE = __DATE__ " " __TIME__;
 
-// Wi-Fi bilgileri
-static const char* WIFI_SSID = "3BFab-RD";
-static const char* WIFI_PASSWORD = "20223BFab*";
+// Wi-Fi bilgileri config.h dosyasından yükleniyor
 
 // HTTP sunucusu
 static ESP8266WebServer server(80);
@@ -665,7 +664,7 @@ void setup() {
 
   // OTA (Over-The-Air) güncelleme
   ArduinoOTA.setHostname("RC-Car");
-  ArduinoOTA.setPassword("20223BFab*");
+  ArduinoOTA.setPassword(OTA_PASSWORD);
   
   ArduinoOTA.onStart([]() {
     String type = (ArduinoOTA.getCommand() == U_FLASH) ? "sketch" : "filesystem";
